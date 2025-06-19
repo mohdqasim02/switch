@@ -1,4 +1,4 @@
-package portfolio.mq.model;
+package portfolio.mq.featureflag.domain.model;
 
 public enum FlagType {
     BOOLEAN,

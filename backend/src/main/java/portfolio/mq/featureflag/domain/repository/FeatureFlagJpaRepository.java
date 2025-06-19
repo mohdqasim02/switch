@@ -1,7 +1,7 @@
-package portfolio.mq.repository;
+package portfolio.mq.featureflag.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import portfolio.mq.model.FeatureFlag;
+import portfolio.mq.featureflag.domain.model.FeatureFlag;
 
 import java.util.UUID;
 

@@ -1,8 +1,9 @@
-package portfolio.mq.repository;
+package portfolio.mq.featureflag.adapter.out.persistnece;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import portfolio.mq.model.FeatureFlag;
+import portfolio.mq.featureflag.domain.model.FeatureFlag;
+import portfolio.mq.featureflag.domain.repository.FeatureFlagRepository;
 
 import java.util.ArrayList;
 import java.util.List;

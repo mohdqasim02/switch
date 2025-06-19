@@ -1,4 +1,4 @@
-package portfolio.mq.model;
+package portfolio.mq.featureflag.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,6 +43,7 @@ public class FeatureFlag {
 
     private String name;
     private String description;
+    private Boolean isEnabled;
 
     @PrePersist
     public void onCreate() {
@@ -71,5 +72,6 @@ public class FeatureFlag {
         this.type = type;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
+        this.isEnabled = false;
     }
 }

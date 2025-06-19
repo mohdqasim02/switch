@@ -1,7 +1,7 @@
 package portfolio.mq.fixtures;
 
-import portfolio.mq.model.FeatureFlag;
-import portfolio.mq.model.FlagType;
+import portfolio.mq.featureflag.domain.model.FeatureFlag;
+import portfolio.mq.featureflag.domain.model.FlagType;
 
 import java.time.LocalDateTime;
 

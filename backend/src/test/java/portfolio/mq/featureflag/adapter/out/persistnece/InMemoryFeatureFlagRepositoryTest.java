@@ -1,8 +1,9 @@
-package portfolio.mq.repository;
+package portfolio.mq.featureflag.adapter.out.persistnece;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import portfolio.mq.model.FeatureFlag;
+import portfolio.mq.featureflag.domain.model.FeatureFlag;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static portfolio.mq.fixtures.Fixtures.aDefaultFlag;
 import static portfolio.mq.fixtures.Fixtures.aFlag;
-import static portfolio.mq.model.FlagType.BOOLEAN;
+import static portfolio.mq.featureflag.domain.model.FlagType.BOOLEAN;
 
 class InMemoryFeatureFlagRepositoryTest {
     private InMemoryFeatureFlagRepository repository;
