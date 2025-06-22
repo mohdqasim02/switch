@@ -40,7 +40,7 @@ class FeatureFlagControllerTest {
 
         when(service.getAllFlags()).thenReturn(flags);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/toggles")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/toggles/")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.length()").value(flags.size()))

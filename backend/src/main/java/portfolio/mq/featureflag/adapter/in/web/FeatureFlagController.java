@@ -27,7 +27,7 @@ public class FeatureFlagController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public List<FeatureFlagDto> getAllFlags() {
         return service.getAllFlags();
