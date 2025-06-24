@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import portfolio.mq.featureflag.application.dto.FeatureFlagDto;
 import portfolio.mq.featureflag.domain.model.FeatureFlag;
@@ -14,6 +13,9 @@ import portfolio.mq.featureflag.domain.repository.FeatureFlagRepository;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static portfolio.mq.fixtures.Fixtures.aDefaultFlag;
 import static portfolio.mq.fixtures.Fixtures.aFlag;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +38,7 @@ class FeatureFlagServiceTest {
             null
         );
 
-        Mockito.when(repository.findAll()).thenReturn(List.of(flag));
+        when(repository.findAll()).thenReturn(List.of(flag));
 
         List<FeatureFlagDto> result = featureFlagService.getAllFlags();
 
@@ -65,12 +67,25 @@ class FeatureFlagServiceTest {
             null
         );
 
-        Mockito.when(repository.save(Mockito.any(FeatureFlag.class))).thenReturn(flag);
+        when(repository.save(any(FeatureFlag.class))).thenReturn(flag);
 
         FeatureFlagDto result = featureFlagService.createFlag(dto);
 
         assertEquals("key1", result.flagKey());
         assertEquals("name1", result.name());
         assertEquals("desc1", result.description());
+    }
+
+    @Test
+    void updateFlagStatus() {
+        FeatureFlag flag = aDefaultFlag();
+        Boolean initialStatus = flag.getIsEnabled();
+
+        when(repository.findByFlagKey(any())).thenReturn(flag);
+        when(repository.save(any(FeatureFlag.class))).thenReturn(flag);
+
+        FeatureFlagDto result = featureFlagService.updateFlagStatus(flag.getFlagKey());
+
+        assertEquals(!initialStatus, result.isEnabled());
     }
 }

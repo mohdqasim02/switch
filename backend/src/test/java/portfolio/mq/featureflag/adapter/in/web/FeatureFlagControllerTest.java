@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import portfolio.mq.featureflag.application.dto.FeatureFlagDto;
+import portfolio.mq.featureflag.application.dto.ToggleUpdateRequest;
 import portfolio.mq.featureflag.application.service.FeatureFlagService;
 import portfolio.mq.featureflag.domain.model.FlagType;
 
@@ -60,5 +61,24 @@ class FeatureFlagControllerTest {
             .andExpect(MockMvcResultMatchers.status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.flagKey").value("key3"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Flag 3"));
+    }
+
+    @Test
+    void shouldUpdateToggle() throws Exception {
+        String key = "key1";
+        ToggleUpdateRequest toggleUpdateRequest = new ToggleUpdateRequest(true, "");
+
+        FeatureFlagDto updatedDto = new FeatureFlagDto(
+            key, "Flag 1", "Description 1", FlagType.BOOLEAN, true, "user1", LocalDateTime.now()
+        );
+
+        when(service.updateFlagStatus(key)).thenReturn(updatedDto);
+
+        mockMvc.perform(MockMvcRequestBuilders.patch("/api/toggles/update/{key}", key)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(toggleUpdateRequest)))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.flagKey").value(key))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.isEnabled").value(true));
     }
 }

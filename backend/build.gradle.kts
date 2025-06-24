@@ -54,3 +54,7 @@ tasks.withType<Test> {
         showStackTraces = true
     }
 }
+
+tasks.bootRun {
+    jvmArgs= listOf("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005")
+}

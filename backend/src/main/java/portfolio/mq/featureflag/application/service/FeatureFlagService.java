@@ -1,5 +1,6 @@
 package portfolio.mq.featureflag.application.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import portfolio.mq.featureflag.application.dto.FeatureFlagDto;
 import portfolio.mq.featureflag.domain.model.FeatureFlag;
@@ -10,14 +11,14 @@ import java.util.List;
 @Service
 public class FeatureFlagService {
 
-    private final FeatureFlagRepository repository;
+    private final FeatureFlagRepository flagRepository;
 
-    public FeatureFlagService(FeatureFlagRepository repository) {
-        this.repository = repository;
+    public FeatureFlagService(FeatureFlagRepository flagRepository) {
+        this.flagRepository = flagRepository;
     }
 
     public List<FeatureFlagDto> getAllFlags() {
-        return repository.findAll().stream()
+        return flagRepository.findAll().stream()
             .map(this::mapToDTO)
             .toList();
     }
@@ -32,7 +33,7 @@ public class FeatureFlagService {
             dto.createdAt()
         );
 
-        FeatureFlag saved = repository.save(flag);
+        FeatureFlag saved = flagRepository.save(flag);
         return mapToDTO(saved);
     }
 
@@ -46,6 +47,15 @@ public class FeatureFlagService {
             flag.getCreatedBy(),
             flag.getCreatedAt()
         );
+    }
+
+    @Transactional
+    public FeatureFlagDto updateFlagStatus(String key) {
+        FeatureFlag flag = flagRepository.findByFlagKey(key);
+
+        flag.toggleIsEnabled();
+
+        return mapToDTO(flagRepository.save(flag));
     }
 }
 

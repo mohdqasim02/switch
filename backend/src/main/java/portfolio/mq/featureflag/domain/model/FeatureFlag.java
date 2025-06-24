@@ -74,4 +74,8 @@ public class FeatureFlag {
         this.createdAt = createdAt;
         this.isEnabled = false;
     }
+
+    public void toggleIsEnabled() {
+        this.isEnabled = !this.isEnabled;
+    }
 }
