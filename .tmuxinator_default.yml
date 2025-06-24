@@ -1,0 +1,19 @@
+name: switch
+root: .
+
+tmux_options: -f local-standalone/tmux.conf
+
+windows:
+  - main:
+      layout: tiled
+      panes:
+        - frontend:
+          - printf '\033]2;%s\033\\' 'frontend'
+          - cd ./frontend
+          - npm install && npm run dev
+        - backend:
+          - printf '\033]2;%s\033\\' 'backend run'
+          - ./gradlew bootRun --args='--spring.profiles.active=local'
+        - tmux:
+          - printf '\033]2;%s\033\\' 'tmux'
+          - bash local-standalone/commander.sh
